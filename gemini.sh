@@ -1,0 +1,72 @@
+#!/bin/bash 
+# Copyright (C) 2001-2020  Alex Schroeder <alex@gnu.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# Gemini and Titan
+#
+# This code declares to bash functions with which to read and write
+# Gemini sites.
+#
+# Various ways to gemini://alexschroeder/Test:
+#
+#     gemini gemini://alexschroeder.ch:1965/Test
+#     gemini alexschroeder.ch/Test
+#
+# Various ways to edit same page (URLs depend on the site):
+#
+#     echo hello | titan titan://alexschroeder.ch/raw/Test hello
+#     date | titan alexschroeder.ch/raw/Test hello
+#
+# To install, source this file from your ~/.bashrc file:
+#
+#     source ~/src/gemini.sh/gemini.sh
+
+function gemini () {
+    if [[ $1 =~ ^((gemini)://)?([^/:]+)(:([0-9]+))?/(.*)$ ]]; then
+	schema=${BASH_REMATCH[2]:-gemini}
+	host=${BASH_REMATCH[3]}
+	port=${BASH_REMATCH[5]:-1965}
+	path=${BASH_REMATCH[6]}
+	echo Contacting $host:$port...
+	echo "$schema://$host:$port/$path"
+	printf "$schema://$host:$port/$path\r\n" \
+	    | openssl s_client -quiet -connect "$host:$port" 2>/dev/null
+    else
+	echo $1 is not a Gemini URL
+    fi
+}
+
+function titan () {
+    if [[ -z "$2" ]]; then
+        echo Usage: $0 URL TOKEN [FILE]
+	exit
+    else
+	token=$2
+    fi
+    if [[ $1 =~ ^((titan)://)?([^/:]+)(:([0-9]+))?/(.*)$ ]]; then
+	schema=${BASH_REMATCH[2]:-titan}
+	host=${BASH_REMATCH[3]}
+	port=${BASH_REMATCH[5]:-1965}
+	path=${BASH_REMATCH[6]}
+	echo Reading ${2:-/dev/stdin}
+	read -d "" file < "${3:-/dev/stdin}"
+	size=${#file}
+	echo Posting $size bytes to $host:$port...
+	printf "$schema://$host:$port/$path;token=$token;mime=text/plain;size=$size\r\n$file" \
+	    | openssl s_client -quiet -connect $host:$port 2>/dev/null
+    else
+	echo $1 is not a Titan URL
+    fi
+}
