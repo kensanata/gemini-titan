@@ -40,3 +40,5 @@ file:
 ```
 source ~/src/gemini-titan/gemini.sh
 ```
+
+Contact: [Alex Schroeder](https://alexschroeder.ch/wiki/Contact)
