@@ -40,7 +40,6 @@ function gemini () {
 	port=${BASH_REMATCH[5]:-1965}
 	path=${BASH_REMATCH[6]}
 	echo Contacting $host:$port...
-	echo "$schema://$host:$port/$path"
 	printf "$schema://$host:$port/$path\r\n" \
 	    | openssl s_client -quiet -connect "$host:$port" 2>/dev/null
     else
