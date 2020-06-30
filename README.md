@@ -17,7 +17,8 @@ markup format.
 
 [Titan](https://communitywiki.org/wiki/Titan) is a light-weight text
 protocol, inspired by Gemini, to write text resources back to a server
-that supports both Gemini and Titan.
+that supports both Gemini and Titan. This is ideal if you want to run
+a [Gemini Wiki](https://alexschroeder.ch/cgit/gemini-wiki/about/).
 
 This project offers two [https://www.gnu.org/software/bash/ Bash]
 functions to illustrate how this would work.
