@@ -40,7 +40,7 @@ function gemini () {
 	port=${BASH_REMATCH[5]:-1965}
 	path=${BASH_REMATCH[6]}
 	echo Contacting $host:$port...
-	printf "$schema://$host:$port/$path\r\n" \
+	echo -e "$schema://$host:$port/$path\r\n" \
 	    | openssl s_client -quiet -connect "$host:$port" 2>/dev/null
     else
 	echo $1 is not a Gemini URL
@@ -71,7 +71,7 @@ function titan () {
 	mime=$(file --brief --mime-type "$file")
 	size=$(wc --bytes < "$file")
 	echo Posting $size bytes of $mime to $host:$port...
-	(printf "$schema://$host:$port/$path;token=$token;mime=$mime;size=$size\r\n"; cat "$file") \
+	(echo -e "$schema://$host:$port/$path;token=$token;mime=$mime;size=$size\r\n"; cat "$file") \
 	    | openssl s_client -quiet -connect $host:$port 2>/dev/null
 	if [[ $remove == "1" ]]; then
 	    rm "$file"
