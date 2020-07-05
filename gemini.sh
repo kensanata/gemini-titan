@@ -71,7 +71,7 @@ function titan () {
 	mime=$(file --brief --mime-type "$file")
 	size=$(wc --bytes < "$file")
 	echo Posting $size bytes of $mime to $host:$port...
-	(echo -e "$schema://$host:$port/$path;token=$token;mime=$mime;size=$size\r\n"; cat "$file") \
+	(echo -e "$schema://$host:$port/$path;token=$token;mime=$mime;size=$size\r"; cat "$file") \
 	    | openssl s_client -quiet -connect $host:$port 2>/dev/null
 	if [[ $remove == "1" ]]; then
 	    rm "$file"
