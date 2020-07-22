@@ -23,20 +23,51 @@ a [Gemini Wiki](https://alexschroeder.ch/cgit/gemini-wiki/about/).
 This project offers two [Bash](https://www.gnu.org/software/bash/)
 functions to illustrate how this would work.
 
-To a test page:
+## Gemini and Titan
+
+This code declares to bash functions with which to read and write
+Gemini sites.
+
+Here's how read to `gemini://alexschroeder/Test`:
 
 ```
-gemini gemini://alexschroeder.ch/Test
+gemini gemini://alexschroeder.ch:1965/Test
 ```
 
-To write a test page:
+The scheme and port are optional:
 
 ```
-echo "Gordon Cooper" | titan titan://alexschroeder.ch/raw/Test hello
+gemini alexschroeder.ch/Test
 ```
 
-To install the two functions, source this file from your `~/.bashrc`
-file:
+Here's how to edit titan://alexschroeder.ch/raw/Test (the exact URLs
+to use depend on the site):
+
+```
+echo hello | titan titan://alexschroeder.ch:1965/raw/Test hello
+```
+
+Again, the scheme and port are optional:
+
+```
+date | titan alexschroeder.ch/raw/Test hello
+```
+
+You can also post a text file:
+
+```
+titan alexschroeder.ch/raw/Test hello test.txt
+```
+
+So there's your workflow:
+
+```
+gemini alexschroeder.ch/Test > test.txt
+vim test.txt
+titan alexschroeder.ch/raw/Test hello test.txt
+```
+
+To install, source this file from your ~/.bashrc file, source it:
 
 ```
 source ~/src/gemini-titan/gemini.sh

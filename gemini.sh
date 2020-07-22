@@ -19,19 +19,36 @@
 # This code declares to bash functions with which to read and write
 # Gemini sites.
 #
-# Various ways to gemini://alexschroeder/Test:
+# Here's how to gemini://alexschroeder/Test:
 #
 #     gemini gemini://alexschroeder.ch:1965/Test
+#
+# The scheme and port are optional:
+#
 #     gemini alexschroeder.ch/Test
 #
-# Various ways to edit same page (URLs depend on the site):
+# Here's how to edit titan://alexschroeder.ch/raw/Test (the exact URLs
+# to use depend on the site):
 #
-#     echo hello | titan titan://alexschroeder.ch/raw/Test hello
+#     echo hello | titan titan://alexschroeder.ch:1965/raw/Test hello
+#
+# Again, the scheme and port are optional:
+#
 #     date | titan alexschroeder.ch/raw/Test hello
 #
-# To install, source this file from your ~/.bashrc file:
+# You can also post a text file:
 #
-#     source ~/src/gemini.sh/gemini.sh
+#     titan alexschroeder.ch/raw/Test hello test.txt
+#
+# So there's your workflow:
+#
+#     gemini alexschroeder.ch/Test > test.txt
+#     vim test.txt
+#     titan alexschroeder.ch/raw/Test hello test.txt
+#
+# To install, source this file from your ~/.bashrc file, source it:
+#
+#     source ~/src/gemini-titan/gemini.sh
 
 function gemini () {
     if [[ $1 =~ ^((gemini)://)?([^/:]+)(:([0-9]+))?/(.*)$ ]]; then
