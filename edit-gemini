@@ -1,0 +1,42 @@
+#!/bin/bash
+if [[ ! $1 =~ ^((gemini)://)?([^/:]+)(:([0-9]+))?/(.*)$ ]]; then
+    echo "$1" is not a Gemini URL
+    exit 1
+fi
+    
+schema=${BASH_REMATCH[2]:-gemini}
+host=${BASH_REMATCH[3]}
+port=${BASH_REMATCH[5]:-1965}
+path=${BASH_REMATCH[6]}
+file=$(mktemp)
+trap "rm '$file'" EXIT
+
+echo Contacting $host:$port...
+echo -e "$schema://$host:$port/$path\r\n" \
+    | openssl s_client -quiet -connect "$host:$port" \
+	      2>/dev/null \
+	      | tail --lines=+2 \
+	      > "$file"
+
+read -p "What's the token? " -r
+token="$REPLY"
+
+$EDITOR "$file"
+
+echo "Save?"
+select answer in "Yes" "No" "Show" "Edit" "Help"; do
+    case $answer in
+        Yes  ) break;;
+        No   ) echo "Aborting"; exit;;
+	Show ) cat "$file";;
+	Edit ) $EDITOR "$file";;
+	Help ) echo "Yes: save, No: abort, Show: show file, Edit: edit it again";;
+    esac
+done
+
+schema=titan
+mime="text/plain"
+size=$(wc --bytes < "$file")
+echo Posting $size bytes of $mime to $host:$port...
+(echo -e "$schema://$host:$port/$path;token=$token;mime=$mime;size=$size\r"; cat "$file") \
+    | openssl s_client -quiet -connect $host:$port 2>/dev/null
