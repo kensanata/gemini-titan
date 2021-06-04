@@ -25,8 +25,8 @@ functions to illustrate how this would work.
 
 ## Gemini and Titan
 
-This code declares to bash functions with which to read and write
-Gemini sites.
+The code declares two bash functions called “gemini” and “titan” with
+which to read and write Gemini sites.
 
 Here's how read to `gemini://alexschroeder/Test`:
 
