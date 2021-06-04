@@ -16,10 +16,10 @@
 #
 # Gemini and Titan
 #
-# This code declares to bash functions with which to read and write
+# This code declares two bash functions with which to read and write
 # Gemini sites.
 #
-# Here's how to gemini://alexschroeder/Test:
+# Here's how to read "gemini://alexschroeder/Test":
 #
 #     gemini gemini://alexschroeder.ch:1965/Test
 #
@@ -27,8 +27,8 @@
 #
 #     gemini alexschroeder.ch/Test
 #
-# Here's how to edit titan://alexschroeder.ch/raw/Test (the exact URLs
-# to use depend on the site):
+# Here's how to edit "titan://alexschroeder.ch/raw/Test" (the exact
+# URLs to use depend on the site):
 #
 #     echo hello | titan titan://alexschroeder.ch:1965/raw/Test hello
 #
@@ -46,7 +46,7 @@
 #     vim test.txt
 #     titan alexschroeder.ch/raw/Test hello test.txt
 #
-# To install, source this file from your ~/.bashrc file, source it:
+# To install, source this file from your ~/.bashrc file:
 #
 #     source ~/src/gemini-titan/gemini.sh
 
