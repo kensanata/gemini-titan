@@ -28,7 +28,7 @@ functions to illustrate how this would work.
 The code declares two bash functions called “gemini” and “titan” with
 which to read and write Gemini sites.
 
-Here's how read to `gemini://alexschroeder/Test`:
+Here's how to read `gemini://alexschroeder/Test`:
 
 ```
 gemini gemini://alexschroeder.ch:1965/Test
@@ -40,7 +40,7 @@ The scheme and port are optional:
 gemini alexschroeder.ch/Test
 ```
 
-Here's how to edit titan://alexschroeder.ch/raw/Test (the exact URLs
+Here's how to edit “titan://alexschroeder.ch/raw/Test” (the exact URLs
 to use depend on the site):
 
 ```
