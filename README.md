@@ -67,7 +67,7 @@ vim test.txt
 titan alexschroeder.ch/raw/Test hello test.txt
 ```
 
-To install, source this file from your ~/.bashrc file, source it:
+To install, source this file from your ~/.bashrc file:
 
 ```
 source ~/src/gemini-titan/gemini.sh
